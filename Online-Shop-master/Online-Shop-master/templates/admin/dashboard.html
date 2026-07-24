@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block haeder %}
+    <title>پنل مدیریت</title>
+{% endblock %}
+{% block body %}
+
+    {% include 'part/header.html' %}
+
+    <section class="simple-box cart" style="max-width: 550px">
+        <h1>سفارشات</h1>
+        <table class="cart">
+            <tr>
+                <th>شماره سفارش</th>
+                <th>وضعیت</th>
+                <th>نام کاربر</th>
+                <th>موبایل کاربر</th>
+                <th>مشاهده</th>
+            </tr>
+            {% for cart in carts %}
+                <tr>
+                    <td>{{ cart.id }}</td>
+                    <td>{{ cart.get_status_persian() }}</td>
+                    <td>{{ cart.user.username }}</td>
+                    <td>{{ cart.user.phone }}</td>
+                    <td><a href="{{ url_for('admin.order', id=cart.id ) }}">جزئیات</a></td>
+                </tr>
+
+            {% endfor %}
+        </table>
+    </section>
+
+
+{% endblock %}

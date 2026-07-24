@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block haeder %}
+    <title>فروشگاه اینترنتی {{ myconfig.SITE_NAME }}</title>
+{% endblock %}
+{% block body %}
+
+
+    {% include 'part/header.html' %}
+    <div id="slideshow">
+        <img class="banner" src="{{ url_for('static',filename='image/banner.jpg') }}">
+        <a href="http://localhost:5000/?search=%DA%A9%D8%A7%D9%81%DB%8C">
+            <img class="banner" src="{{ url_for('static',filename='image/banner2.jpg') }}">
+        </a>
+        <a href="http://localhost:5000/?search=%D9%86%D9%85%DA%A9">
+            <img class="banner" src="{{ url_for('static',filename='image/banner3.jpg') }}">
+        </a>
+    </div>
+
+    <section class="products">
+
+    {% if products %}
+        {% for p in products %}
+            {% include "part/product.html" %}
+        {% endfor %}
+    {% else %}
+        <h3 style="text-align:center;">محصولی یافت نشد.</h3>
+    {% endif %}
+
+</section>
+
+
+    <script>
+
+        const slide_show_items = document.getElementsByClassName('banner')
+        var next_slide = 0
+        const change_slide_show = () => {
+            if (next_slide > slide_show_items.length - 1)
+                next_slide = 0
+
+            if (next_slide == 0)
+                slide_show_items[slide_show_items.length - 1].style.height = "0"
+            else
+                slide_show_items[next_slide - 1].style.height = "0"
+
+            slide_show_items[next_slide].style.height = '300px'
+            next_slide++
+        }
+        change_slide_show()
+        setInterval(change_slide_show, 5000)
+    </script>
+{% endblock %}

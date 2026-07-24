@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block haeder %}
+    <title>صفحه محصولات</title>
+{% endblock %}
+{% block body %}
+
+
+    {% include 'part/header.html' %}
+
+    <section class="simple-box">
+<h1>محصولات</h1>
+        <table>
+            <tr>
+                <th>تصویر</th>
+                <th>اسم</th>
+                <th>توضیحات</th>
+                <th>قیمت</th>
+                <th>فعال</th>
+                <th>تعداد</th>
+                <th>ویرایش</th>
+                <th></th>
+            </tr>
+
+            {% for p in products %}
+                <tr>
+                    <td>
+    {% if p.images|length > 0 %}
+        <img src="{{ url_for('static', filename='cover/' + p.images[0].image) }}"
+             style="width:70px;height:70px;object-fit:cover;border-radius:8px;">
+    {% else %}
+        بدون تصویر
+    {% endif %}
+</td>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.description|truncate(150) }}</td>
+                    <td>{{ p.price }}</td>
+                    <td><img style="width: 20px;"
+                             src="{{ url_for('static', filename='theme-image/done.png') if p.active == 1 else url_for('static', filename='theme-image/delete.png') }}">
+                    </td>
+                    <td>{{ p.number }}</td>
+                    <td>
+                        <form method="post">
+                            <input type="hidden" name="time" value="{{time}}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="product_id" value="{{ p.id }}">
+                            <input type="number" name="number" placeholder="تعداد محصولات اضافه شده:">
+                            <input type="submit" value="اضافه کردن">
+                        </form>
+                    </td>
+
+                </tr>
+
+
+            {% endfor %}
+        </table>
+        <a href="/anbar/dashboard/products/added">هدایت به صفحه ی لیست اضافه کردن</a>
+    </section>
+{% endblock %}

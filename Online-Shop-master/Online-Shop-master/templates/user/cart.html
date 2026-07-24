@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block haeder %}
+    <title>سبدخرید</title>
+{% endblock %}
+{% block body %}
+
+    {% include 'part/header.html' %}
+
+
+    <section class="simple-box cart">
+        <h1>سبدخرید</h1>
+        {% if cart != None and cart.cart_items|list|length > 0 %}
+            <table class="cart">
+                <tr>
+                    <th>محصول</th>
+                    <th>قیمت</th>
+                    <th>تعداد</th>
+                </tr>
+                {% for cart_item in cart.cart_items %}
+                    <tr>
+                        <td>{{ cart_item.product.name }}</td>
+                        <td class="price">{{ cart_item.price }}</td>
+                        <td>
+                            <div style="display:flex;justify-content:center;align-items:center;">
+                                <a class="cartitem-btn"
+                                   href="/remove-from-cart?id={{ cart_item.id }}">-</a>
+
+                                {{ cart_item.quantity }}
+
+                                {% if cart_item.quantity < cart_item.product.number %}
+                                    <a class="cartitem-btn"
+                                       href="/add-to-cart?id={{ cart_item.product.id }}">+</a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                <tr>
+                    <td colspan="3" style="text-align: left;">قیمت کل : <span
+                            class="price">{{ cart.total_price() }}</span></td>
+                </tr>
+            </table>
+
+
+            <a class="pay-btn icon" href="/payment"> پرداخت آنلاین <img
+                    src="{{ url_for('static',filename="theme-image/wallet.png") }}"></a>
+
+
+        {% else %}
+            <i style="display: block;text-align: center;">سبد خرید خالی است</i>
+        {% endif %}
+
+    </section>
+
+
+{% endblock %}

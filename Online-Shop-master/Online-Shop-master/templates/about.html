@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block haeder %}
+    <title>درباره فروشگاه اینترنتی {{ myconfig.SITE_NAME }}</title>
+{% endblock %}
+{% block body %}
+
+    {% include 'part/header.html' %}
+
+    <section class="simple-box">
+        <h1>درباره {{ myconfig.SITE_NAME }}</h1>
+        {{ myconfig.ABOUT_PAGE_HTML|safe }}
+    </section>
+
+
+{% endblock %}

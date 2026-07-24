@@ -1,0 +1,48 @@
+<div class="product-box">
+    <a style="all:unset;cursor: pointer;"
+       href="{{ url_for('general.product', id=p.id, name=p.name) }}">
+
+        <section>
+            <img
+    src="{{ url_for('static', filename='cover/' ~ p.id ~ '_0.jpg') }}"
+    onerror="this.style.display='none'">
+            <span class="tag green" style="margin-right:5px;">
+                <img src="{{ url_for('static', filename='theme-image/delivery.png') }}">
+                {{ myconfig.feature1 }}
+            </span>
+
+            <span class="tag blue">
+                <img src="{{ url_for('static', filename='theme-image/done.png') }}">
+                {{ myconfig.feature2 }}
+            </span>
+
+            <h3>{{ p.name }}</h3>
+            <p>{{ p.description|truncate(250) }}</p>
+
+            <span class="price">{{ p.price }}</span>
+            <br>
+
+            {% if p.number > 0 %}
+                <span class="number">تعداد: {{ p.number }}</span>
+            {% else %}
+                <span class="number" style="color:red;font-weight:bold;">
+                    اتمام موجودی
+                </span>
+            {% endif %}
+
+        </section>
+    </a>
+
+    {% if p.number > 0 %}
+        <a class="add-to-cart-btn icon" href="/add-to-cart?id={{ p.id }}">
+            افزودن به سبد
+            <img src="{{ url_for('static', filename='theme-image/cart.png') }}">
+        </a>
+    {% else %}
+        <a class="add-to-cart-btn icon"
+           style="background:#999;cursor:not-allowed;pointer-events:none;">
+            اتمام موجودی
+        </a>
+    {% endif %}
+
+</div>

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block haeder %}
+    <title>تاریخچه موجودی انبار</title>
+{% endblock %}
+
+{% block body %}
+
+    {% include 'part/header.html' %}
+
+    <section class="simple-box">
+
+        <h2>تاریخچه ورود محصولات</h2>
+
+        <table>
+            <tr>
+                <th>عکس</th>
+                <th>محصول</th>
+                <th>تعداد</th>
+                <th>عملیات</th>
+                <th>زمان ثبت</th>
+            </tr>
+
+            {% for h in history %}
+                <tr>
+
+                    <td>
+    {% if h.product.images|length > 0 %}
+        <img src="{{ url_for('static',
+            filename='cover/' + h.product.images[0].image) }}"
+             style="width:70px;height:70px;object-fit:cover;border-radius:8px;">
+    {% else %}
+        بدون تصویر
+    {% endif %}
+</td>
+
+                    <td>
+                        {{ h.product.name }}
+                    </td>
+
+                    <td>
+                        {{ h.count }}
+                    </td>
+
+                    <td>
+                        {% if h.action == "add" %}
+                            ورود کالا
+                        {% else %}
+                            فروش
+                        {% endif %}
+                    </td>
+                    </td>
+
+                    <td>
+                        {{ h.submit_time }}
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+        </table>
+
+        <br>
+
+        <a href="/anbar/dashboard/products">
+            بازگشت
+        </a>
+
+    </section>
+
+{% endblock %}
